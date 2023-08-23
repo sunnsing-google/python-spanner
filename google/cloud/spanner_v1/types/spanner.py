@@ -53,6 +53,8 @@ __protobuf__ = proto.module(
         "BeginTransactionRequest",
         "CommitRequest",
         "RollbackRequest",
+        "BatchWriteRequest",
+        "BatchWriteResponse",
     },
 )
 
@@ -1323,6 +1325,86 @@ class RollbackRequest(proto.Message):
     transaction_id: bytes = proto.Field(
         proto.BYTES,
         number=2,
+    )
+
+
+class BatchWriteRequest(proto.Message):
+    r"""The request for [BatchWrite][Spanner.BatchWrite].
+
+    Attributes:
+        session (str):
+            The session in which the batch request is to
+            be run.
+        request_options (google.cloud.spanner_v1.types.RequestOptions):
+            Common options for this request.
+        mutation_groups (MutableSequence[google.cloud.spanner_v1.types.BatchWriteRequest.MutationGroup]):
+            The groups of mutations to be applied.
+    """
+
+    class MutationGroup(proto.Message):
+        r"""A group of mutations to be committed together. Related
+        mutations should be placed in a group. For example, two
+        mutations inserting rows with the same primary key prefix in
+        both parent and child tables are related.
+
+        Attributes:
+            mutations (MutableSequence[google.cloud.spanner_v1.types.Mutation]):
+                The mutations in this group.
+        """
+
+        mutations: MutableSequence[mutation.Mutation] = proto.RepeatedField(
+            proto.MESSAGE,
+            number=1,
+            message=mutation.Mutation,
+        )
+
+    session: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    request_options: "RequestOptions" = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message="RequestOptions",
+    )
+    mutation_groups: MutableSequence[MutationGroup] = proto.RepeatedField(
+        proto.MESSAGE,
+        number=4,
+        message=MutationGroup,
+    )
+
+
+class BatchWriteResponse(proto.Message):
+    r"""The result of applying a batch of mutations.
+
+    Attributes:
+        indexes (MutableSequence[int]):
+            The mutation groups applied in this batch. The values index
+            into the ``mutation_groups`` field in the corresponding
+            ``BatchWriteRequest``.
+        status (google.rpc.status_pb2.Status):
+            An ``OK`` status indicates success. Any other status
+            indicates a failure.
+        commit_timestamp (google.protobuf.timestamp_pb2.Timestamp):
+            The commit timestamp of the transaction that applied this
+            batch. Present if ``status`` is ``OK``, absent otherwise.
+            (-- api-linter: core::0142::time-field-names=disabled
+            aip.dev/not-precedent: This is part of an existing API. --)
+    """
+
+    indexes: MutableSequence[int] = proto.RepeatedField(
+        proto.INT32,
+        number=1,
+    )
+    status: status_pb2.Status = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=status_pb2.Status,
+    )
+    commit_timestamp: timestamp_pb2.Timestamp = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp_pb2.Timestamp,
     )
 
 

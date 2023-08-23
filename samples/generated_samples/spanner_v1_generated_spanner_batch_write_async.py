@@ -15,15 +15,15 @@
 #
 # Generated code. DO NOT EDIT!
 #
-# Snippet for GetInstance
+# Snippet for BatchWrite
 # NOTE: This snippet has been automatically generated for illustrative purposes only.
 # It may require modifications to work in your environment.
 
 # To install the latest published package dependency, execute the following:
-#   python3 -m pip install google-cloud-spanner-admin-instance
+#   python3 -m pip install google-cloud-spanner
 
 
-# [START spanner_v1_generated_InstanceAdmin_GetInstance_sync]
+# [START spanner_v1_generated_Spanner_BatchWrite_async]
 # This snippet has been automatically generated and should be regarded as a
 # code template only.
 # It will require modifications to work:
@@ -31,22 +31,27 @@
 # - It may require specifying regional endpoints when creating the service
 #   client as shown in:
 #   https://googleapis.dev/python/google-api-core/latest/client_options.html
-from google.cloud import spanner_admin_instance_v1
+from google.cloud import spanner_v1
 
 
-def sample_get_instance():
+async def sample_batch_write():
     # Create a client
-    client = spanner_admin_instance_v1.InstanceAdminClient()
+    client = spanner_v1.SpannerAsyncClient()
 
     # Initialize request argument(s)
-    request = spanner_admin_instance_v1.GetInstanceRequest(
-        name="name_value",
+    mutation_groups = spanner_v1.MutationGroup()
+    mutation_groups.mutations.insert.table = "table_value"
+
+    request = spanner_v1.BatchWriteRequest(
+        session="session_value",
+        mutation_groups=mutation_groups,
     )
 
     # Make the request
-    response = client.get_instance(request=request)
+    stream = await client.batch_write(request=request)
 
     # Handle the response
-    print(response)
+    async for response in stream:
+        print(response)
 
-# [END spanner_v1_generated_InstanceAdmin_GetInstance_sync]
+# [END spanner_v1_generated_Spanner_BatchWrite_async]
