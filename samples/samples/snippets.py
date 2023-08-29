@@ -416,6 +416,65 @@ def insert_data(instance_id, database_id):
 # [END spanner_insert_data]
 
 
+# [START spanner_batch_write]
+def batch_write(instance_id, database_id):
+    """Inserts sample data into the given database via BatchWrite API.
+
+    The database and table must already exist and can be created using
+    `create_database`.
+    """
+    spanner_client = spanner.Client(client_options={'api_endpoint':
+   'staging-wrenchworks.sandbox.googleapis.com'})
+    instance = spanner_client.instance(instance_id)
+    database = instance.database(database_id)
+
+    with database.mutation_groups() as groups:
+        group1 = groups.group()
+        group1.insert_or_update(
+            table="Singers",
+            columns=("SingerId", "FirstName", "LastName"),
+            values=[
+                (6, "Marc", "Richards"),
+                (7, "Catalina", "Smith"),
+                (8, "Alice", "Trentor"),
+                (9, "Lea", "Martin"),
+                (10, "David", "Lomond"),
+            ],
+        )
+        group1.insert_or_update(
+            table="Singers",
+            columns=("SingerId", "FirstName", "LastName"),
+            values=[
+                (11, "Marc", "Richards"),
+                (12, "Catalina", "Smith"),
+                (13, "Alice", "Trentor"),
+                (14, "Lea", "Martin"),
+                (15, "David", "Lomond"),
+            ],
+        )
+
+        group2 = groups.group()
+        group2.insert_or_update(
+            table="Albums",
+            columns=("SingerId", "AlbumId", "AlbumTitle"),
+            values=[
+                (6, 1, "Total Junk"),
+                (7, 2, "Go, Go, Go"),
+                (8, 1, "Green"),
+                (9, 2, "Forever Hold Your Peace"),
+                (10, 3, "Terrified"),
+            ],
+        )
+
+        for response in groups.batch_write():
+            print(response)
+
+    print("Inserted data.")
+
+
+# [END spanner_batch_write]
+
+
 # [START spanner_delete_data]
 def delete_data(instance_id, database_id):
     """Deletes sample data from the given database.
@@ -2763,6 +2822,7 @@ if __name__ == "__main__":  # noqa: C901
     subparsers.add_parser("create_instance", help=create_instance.__doc__)
     subparsers.add_parser("create_database", help=create_database.__doc__)
     subparsers.add_parser("insert_data", help=insert_data.__doc__)
+    subparsers.add_parser("batch_write", help=batch_write.__doc__)
     subparsers.add_parser("delete_data", help=delete_data.__doc__)
     subparsers.add_parser("query_data", help=query_data.__doc__)
     subparsers.add_parser("read_data", help=read_data.__doc__)
@@ -2897,6 +2957,8 @@ if __name__ == "__main__":  # noqa: C901
         create_database(args.instance_id, args.database_id)
     elif args.command == "insert_data":
         insert_data(args.instance_id, args.database_id)
+    elif args.command == "batch_write":
+        batch_write(args.instance_id, args.database_id)
     elif args.command == "delete_data":
         delete_data(args.instance_id, args.database_id)
     elif args.command == "query_data":

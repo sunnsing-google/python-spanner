@@ -50,6 +50,7 @@ from google.cloud.spanner_v1._helpers import (
     _metadata_with_leader_aware_routing,
 )
 from google.cloud.spanner_v1.batch import Batch
+from google.cloud.spanner_v1.batch import MutationGroups
 from google.cloud.spanner_v1.keyset import KeySet
 from google.cloud.spanner_v1.pool import BurstyPool
 from google.cloud.spanner_v1.pool import SessionCheckout
@@ -735,6 +736,24 @@ class Database(object):
         """
         return BatchCheckout(self, request_options)
 
+    def mutation_groups(self, request_options=None):
+        """Return an object which wraps a mutation_group.
+
+        The wrapper *must* be used as a context manager, with the mutation group
+        as the value returned by the wrapper.
+
+        :type request_options:
+            :class:`google.cloud.spanner_v1.types.RequestOptions`
+        :param request_options:
+                (Optional) Common options for the batch_write request.
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.spanner_v1.types.RequestOptions`.
+
+        :rtype: :class:`~google.cloud.spanner_v1.database.MutationGroupsCheckout`
+        :returns: new wrapper
+        """
+        return MutationGroupsCheckout(self, request_options)
+
     def batch_snapshot(self, read_timestamp=None, exact_staleness=None):
         """Return an object which wraps a batch read / query.
 
@@ -1039,6 +1058,49 @@ class BatchCheckout(object):
                     extra={"commit_stats": self._batch.commit_stats},
                 )
             self._database._pool.put(self._session)
+
+
+class MutationGroupsCheckout(object):
+    """Context manager for using mutation groups from a database.
+
+    Inside the context manager, checks out a session from the database,
+    creates mutation groups from it, making the groups available.
+
+    Caller must *not* use the object to perform API requests outside the scope
+    of the context manager.
+
+    :type database: :class:`~google.cloud.spanner_v1.database.Database`
+    :param database: database to use
+
+    :type request_options:
+            :class:`google.cloud.spanner_v1.types.RequestOptions`
+    :param request_options:
+            (Optional) Common options for the batch_write request.
+            If a dict is provided, it must be of the same form as the protobuf
+            message :class:`~google.cloud.spanner_v1.types.RequestOptions`.
+    """
+
+    def __init__(self, database, request_options=None):
+        self._database = database
+        self._session = self._mutation_groups = None
+        if request_options is None:
+            self._request_options = RequestOptions()
+        elif type(request_options) is dict:
+            self._request_options = RequestOptions(request_options)
+        else:
+            self._request_options = request_options
+
+    def __enter__(self):
+        """Begin ``with`` block."""
+        session = self._session = self._database._pool.get()
+        mutation_groups = self._mutation_groups = MutationGroups(session)
+        if self._request_options.transaction_tag:
+            mutation_groups.transaction_tag = self._request_options.transaction_tag
+        return mutation_groups
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """End ``with`` block."""
+        self._database._pool.put(self._session)
 
 
 class SnapshotCheckout(object):
