@@ -42,7 +42,8 @@ OPERATION_TIMEOUT_SECONDS = 240
 # [START spanner_create_instance]
 def create_instance(instance_id):
     """Creates an instance."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
 
     config_name = "{}/instanceConfigs/regional-us-central1".format(
         spanner_client.project_name
@@ -74,7 +75,8 @@ def create_instance(instance_id):
 # [START spanner_create_instance_with_processing_units]
 def create_instance_with_processing_units(instance_id, processing_units):
     """Creates an instance."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
 
     config_name = "{}/instanceConfigs/regional-us-central1".format(
         spanner_client.project_name
@@ -110,7 +112,8 @@ def create_instance_with_processing_units(instance_id, processing_units):
 # [START spanner_get_instance_config]
 def get_instance_config(instance_config):
     """Gets the leader options for the instance configuration."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     config_name = "{}/instanceConfigs/{}".format(
         spanner_client.project_name, instance_config
     )
@@ -128,7 +131,8 @@ def get_instance_config(instance_config):
 # [START spanner_list_instance_configs]
 def list_instance_config():
     """Lists the available instance configurations."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     configs = spanner_client.list_instance_configs()
     for config in configs:
         print(
@@ -144,7 +148,8 @@ def list_instance_config():
 # [START spanner_list_databases]
 def list_databases(instance_id):
     """Lists databases and their leader options."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     databases = list(instance.list_databases())
@@ -162,7 +167,8 @@ def list_databases(instance_id):
 # [START spanner_create_database]
 def create_database(instance_id, database_id):
     """Creates a database and tables for sample data."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(
@@ -200,7 +206,8 @@ def create_database(instance_id, database_id):
 # [START spanner_update_database]
 def update_database(instance_id, database_id):
     """Updates the drop protection setting for a database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     db = instance.database(database_id)
@@ -220,7 +227,8 @@ def update_database(instance_id, database_id):
 # [START spanner_create_database_with_encryption_key]
 def create_database_with_encryption_key(instance_id, database_id, kms_key_name):
     """Creates a database with tables using a Customer Managed Encryption Key (CMEK)."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(
@@ -260,7 +268,8 @@ def create_database_with_encryption_key(instance_id, database_id, kms_key_name):
 # [START spanner_create_database_with_default_leader]
 def create_database_with_default_leader(instance_id, database_id, default_leader):
     """Creates a database with tables with a default leader."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(
@@ -302,7 +311,8 @@ def create_database_with_default_leader(instance_id, database_id, default_leader
 # [START spanner_update_database_with_default_leader]
 def update_database_with_default_leader(instance_id, database_id, default_leader):
     """Updates a database with tables with a default leader."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -330,7 +340,8 @@ def update_database_with_default_leader(instance_id, database_id, default_leader
 # [START spanner_get_database_ddl]
 def get_database_ddl(instance_id, database_id):
     """Gets the database DDL statements."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
     ddl = spanner_client.database_admin_api.get_database_ddl(database=database.name)
@@ -345,7 +356,8 @@ def get_database_ddl(instance_id, database_id):
 # [START spanner_query_information_schema_database_options]
 def query_information_schema_database_options(instance_id, database_id):
     """Queries the default leader of a database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
     with database.snapshot() as snapshot:
@@ -368,7 +380,8 @@ def insert_data(instance_id, database_id):
     The database and table must already exist and can be created using
     `create_database`.
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -410,7 +423,8 @@ def delete_data(instance_id, database_id):
     The database, table, and data must already exist and can be created using
     `create_database` and `insert_data`.
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -439,7 +453,8 @@ def delete_data(instance_id, database_id):
 # [START spanner_query_data]
 def query_data(instance_id, database_id):
     """Queries sample data from the database using SQL."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -458,7 +473,8 @@ def query_data(instance_id, database_id):
 # [START spanner_read_data]
 def read_data(instance_id, database_id):
     """Reads sample data from the database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -481,7 +497,8 @@ def read_stale_data(instance_id, database_id):
     stale."""
     import datetime
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
     staleness = datetime.timedelta(seconds=15)
@@ -511,7 +528,8 @@ def query_data_with_new_column(instance_id, database_id):
 
         ALTER TABLE Albums ADD COLUMN MarketingBudget INT64
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -530,7 +548,8 @@ def query_data_with_new_column(instance_id, database_id):
 # [START spanner_create_index]
 def add_index(instance_id, database_id):
     """Adds a simple index to the example database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -566,7 +585,8 @@ def query_data_with_index(
         ALTER TABLE Albums ADD COLUMN MarketingBudget INT64
 
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -603,7 +623,8 @@ def read_data_with_index(instance_id, database_id):
         CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)
 
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -626,7 +647,8 @@ def read_data_with_index(instance_id, database_id):
 # [START spanner_create_storing_index]
 def add_storing_index(instance_id, database_id):
     """Adds an storing index to the example database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -659,7 +681,8 @@ def read_data_with_storing_index(instance_id, database_id):
         STORING (MarketingBudget)
 
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -682,7 +705,8 @@ def read_data_with_storing_index(instance_id, database_id):
 # [START spanner_add_column]
 def add_column(instance_id, database_id):
     """Adds a new column to the Albums table in the example database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -710,7 +734,8 @@ def update_data(instance_id, database_id):
         ALTER TABLE Albums ADD COLUMN MarketingBudget INT64
 
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -739,7 +764,8 @@ def read_write_transaction(instance_id, database_id):
     Before running this sample, you will need to run the `update_data` sample
     to populate the fields.
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -803,7 +829,8 @@ def read_only_transaction(instance_id, database_id):
     Within the read-only transaction, or "snapshot", the application sees
     consistent view of the database at a particular timestamp.
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -837,7 +864,8 @@ def read_only_transaction(instance_id, database_id):
 def create_table_with_timestamp(instance_id, database_id):
     """Creates a table with a COMMIT_TIMESTAMP column."""
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -872,7 +900,8 @@ def create_table_with_timestamp(instance_id, database_id):
 def insert_data_with_timestamp(instance_id, database_id):
     """Inserts data with a COMMIT_TIMESTAMP field into a table."""
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -897,7 +926,8 @@ def insert_data_with_timestamp(instance_id, database_id):
 # [START spanner_add_timestamp_column]
 def add_timestamp_column(instance_id, database_id):
     """Adds a new TIMESTAMP column to the Albums table in the example database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -939,7 +969,8 @@ def update_data_with_timestamp(instance_id, database_id):
         ALTER TABLE Albums ADD COLUMN LastUpdateTime TIMESTAMP
         OPTIONS(allow_commit_timestamp=true)
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -973,7 +1004,8 @@ def query_data_with_timestamp(instance_id, database_id):
         OPTIONS (allow_commit_timestamp=true)
 
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -994,7 +1026,8 @@ def query_data_with_timestamp(instance_id, database_id):
 # [START spanner_add_numeric_column]
 def add_numeric_column(instance_id, database_id):
     """Adds a new NUMERIC column to the Venues table in the example database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -1026,7 +1059,8 @@ def update_data_with_numeric(instance_id, database_id):
 
         ALTER TABLE Venues ADD COLUMN Revenue NUMERIC
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -1051,7 +1085,8 @@ def update_data_with_numeric(instance_id, database_id):
 # [START spanner_add_json_column]
 def add_json_column(instance_id, database_id):
     """Adds a new JSON column to the Venues table in the example database."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -1083,7 +1118,8 @@ def update_data_with_json(instance_id, database_id):
 
         ALTER TABLE Venues ADD COLUMN VenueDetails JSON
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -1127,7 +1163,8 @@ def write_struct_data(instance_id, database_id):
     """Inserts sample data that can be used to test STRUCT parameters
     in queries.
     """
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1162,7 +1199,8 @@ def query_with_struct(instance_id, database_id):
     # [END spanner_create_struct_with_data]
 
     # [START spanner_query_data_with_struct]
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
 
     database = instance.database(database_id)
@@ -1199,7 +1237,8 @@ def query_with_array_of_struct(instance_id, database_id):
     # [END spanner_create_array_of_struct_with_data]
 
     # [START spanner_query_data_with_array_of_struct]
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1220,7 +1259,8 @@ def query_with_array_of_struct(instance_id, database_id):
 # [START spanner_field_access_on_struct_parameters]
 def query_struct_field(instance_id, database_id):
     """Query a table using field access on a STRUCT parameter."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1248,7 +1288,8 @@ def query_struct_field(instance_id, database_id):
 # [START spanner_field_access_on_nested_struct_parameters]
 def query_nested_struct_field(instance_id, database_id):
     """Query a table using nested field access on a STRUCT parameter."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1295,7 +1336,8 @@ def insert_data_with_dml(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1326,7 +1368,8 @@ def log_commit_stats(instance_id, database_id):
                 self.last_commit_stats = kwargs["extra"]["commit_stats"]
             super().info(msg)
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id, logger=CommitStatsSampleLogger())
     database.log_commit_stats = True
@@ -1353,7 +1396,8 @@ def update_data_with_dml(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1376,7 +1420,8 @@ def update_data_with_dml_returning(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1407,7 +1452,8 @@ def delete_data_with_dml(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1428,7 +1474,8 @@ def delete_data_with_dml_returning(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1457,7 +1504,8 @@ def update_data_with_dml_timestamp(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1480,7 +1528,8 @@ def dml_write_read_transaction(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1509,7 +1558,8 @@ def update_data_with_dml_struct(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1540,7 +1590,8 @@ def insert_with_dml(instance_id, database_id):
     # [START spanner_dml_getting_started_insert]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1564,7 +1615,8 @@ def insert_with_dml_returning(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1595,7 +1647,8 @@ def query_data_with_parameter(instance_id, database_id):
     # [START spanner_query_with_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1618,7 +1671,8 @@ def write_with_dml_transaction(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1681,7 +1735,8 @@ def update_data_with_partitioned_dml(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1698,7 +1753,8 @@ def delete_data_with_partitioned_dml(instance_id, database_id):
     # [START spanner_dml_partitioned_delete]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1716,7 +1772,8 @@ def update_with_batch_dml(instance_id, database_id):
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
 
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1752,7 +1809,8 @@ def create_table_with_datatypes(instance_id, database_id):
     # [START spanner_create_table_with_datatypes]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1789,7 +1847,8 @@ def insert_datatypes_data(instance_id, database_id):
     # [START spanner_insert_datatypes_data]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1859,7 +1918,8 @@ def query_data_with_array(instance_id, database_id):
     # [START spanner_query_with_array_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1886,7 +1946,8 @@ def query_data_with_bool(instance_id, database_id):
     # [START spanner_query_with_bool_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1912,7 +1973,8 @@ def query_data_with_bytes(instance_id, database_id):
     # [START spanner_query_with_bytes_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1937,7 +1999,8 @@ def query_data_with_date(instance_id, database_id):
     # [START spanner_query_with_date_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1963,7 +2026,8 @@ def query_data_with_float(instance_id, database_id):
     # [START spanner_query_with_float_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -1989,7 +2053,8 @@ def query_data_with_int(instance_id, database_id):
     # [START spanner_query_with_int_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2015,7 +2080,8 @@ def query_data_with_string(instance_id, database_id):
     # [START spanner_query_with_string_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2040,7 +2106,8 @@ def query_data_with_numeric_parameter(instance_id, database_id):
     # [START spanner_query_with_numeric_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2065,7 +2132,8 @@ def query_data_with_json_parameter(instance_id, database_id):
     # [START spanner_query_with_json_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2093,7 +2161,8 @@ def query_data_with_timestamp_parameter(instance_id, database_id):
     # [START spanner_query_with_timestamp_parameter]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2126,7 +2195,8 @@ def query_data_with_query_options(instance_id, database_id):
     # [START spanner_query_with_query_options]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2173,7 +2243,8 @@ def set_transaction_tag(instance_id, database_id):
     # [START spanner_set_transaction_tag]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2217,7 +2288,8 @@ def set_request_tag(instance_id, database_id):
     # [START spanner_set_request_tag]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2239,7 +2311,8 @@ def create_instance_config(user_config_name, base_config_id):
 
     # user_config_name = `custom-nam11`
     # base_config_id = `projects/<project>/instanceConfigs/nam11`
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     base_config = spanner_client.instance_admin_api.get_instance_config(
         name=base_config_id
     )
@@ -2278,7 +2351,8 @@ def update_instance_config(user_config_name):
     """Updates the user-managed instance configuration."""
 
     # user_config_name = `custom-nam11`
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     config = spanner_client.instance_admin_api.get_instance_config(
         name="{}/instanceConfigs/{}".format(
             spanner_client.project_name, user_config_name
@@ -2300,7 +2374,8 @@ def update_instance_config(user_config_name):
 # [START spanner_delete_instance_config]
 def delete_instance_config(user_config_id):
     """Deleted the user-managed instance configuration."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     spanner_client.instance_admin_api.delete_instance_config(name=user_config_id)
     print("Instance config {} successfully deleted".format(user_config_id))
 
@@ -2311,7 +2386,8 @@ def delete_instance_config(user_config_id):
 # [START spanner_list_instance_config_operations]
 def list_instance_config_operations():
     """List the user-managed instance configuration operations."""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     operations = spanner_client.instance_admin_api.list_instance_config_operations(
         request=spanner_instance_admin.ListInstanceConfigOperationsRequest(
             parent=spanner_client.project_name,
@@ -2338,7 +2414,8 @@ def add_and_drop_database_roles(instance_id, database_id):
     # [START spanner_add_and_drop_database_role]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
     role_parent = "new_parent"
@@ -2374,7 +2451,8 @@ def read_data_with_database_role(instance_id, database_id):
     # [START spanner_read_data_with_database_role]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     role = "new_parent"
     database = instance.database(database_id, database_role=role)
@@ -2392,7 +2470,8 @@ def list_database_roles(instance_id, database_id):
     # [START spanner_list_database_roles]
     # instance_id = "your-spanner-instance"
     # database_id = "your-spanner-db-id"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2417,7 +2496,8 @@ def enable_fine_grained_access(
     # iam_member = "user:alice@example.com"
     # database_role = "new_parent"
     # title = "condition title"
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2452,7 +2532,8 @@ def enable_fine_grained_access(
 # [START spanner_create_table_with_foreign_key_delete_cascade]
 def create_table_with_foreign_key_delete_cascade(instance_id, database_id):
     """Creates a table with foreign key delete cascade action"""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2492,7 +2573,8 @@ def create_table_with_foreign_key_delete_cascade(instance_id, database_id):
 # [START spanner_alter_table_with_foreign_key_delete_cascade]
 def alter_table_with_foreign_key_delete_cascade(instance_id, database_id):
     """Alters a table with foreign key delete cascade action"""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2523,7 +2605,8 @@ def alter_table_with_foreign_key_delete_cascade(instance_id, database_id):
 # [START spanner_drop_foreign_key_constraint_delete_cascade]
 def drop_foreign_key_constraint_delete_cascade(instance_id, database_id):
     """Alter table to drop foreign key delete cascade action"""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2551,7 +2634,8 @@ def drop_foreign_key_constraint_delete_cascade(instance_id, database_id):
 # [START spanner_create_sequence]
 def create_sequence(instance_id, database_id):
     """Creates the Sequence and insert data"""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2598,7 +2682,8 @@ def create_sequence(instance_id, database_id):
 # [START spanner_alter_sequence]
 def alter_sequence(instance_id, database_id):
     """Alters the Sequence and insert data"""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
@@ -2641,7 +2726,8 @@ def alter_sequence(instance_id, database_id):
 # [START spanner_drop_sequence]
 def drop_sequence(instance_id, database_id):
     """Drops the Sequence"""
-    spanner_client = spanner.Client()
+    spanner_client = spanner.Client(client_options={'api_endpoint':   
+   'staging-wrenchworks.sandbox.googleapis.com'})
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
